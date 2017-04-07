@@ -1,4 +1,4 @@
-package com.szboanda.sentiment.utils;
+package com.ivan.sentiment.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +12,6 @@ import java.util.Map.Entry;
  * * 
  * @ClassName: CollectionUtils 
  * @Description: 集合工具类
- * <p>Company: 深圳市博安达信息技术股份有限公司</p> 
  * @author zhaoyifan
  * @date 2017年3月3日 下午2:10:29
  */
@@ -20,7 +19,7 @@ public class CollectionUtils {
 	
 	/**
 	 * 按照map的value 排序，value为double类型
-	 * @author 赵一帆
+	 * @author zhaoyifan
 	 * @param oriMap 待排序map
 	 * @param ascending true 为升序，false为降序
 	 * @see 

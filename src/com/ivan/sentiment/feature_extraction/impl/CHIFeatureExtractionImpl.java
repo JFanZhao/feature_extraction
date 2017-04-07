@@ -1,40 +1,52 @@
-package com.szboanda.sentiment.feature_extraction.impl;
+package com.ivan.sentiment.feature_extraction.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.szboanda.sentiment.beans.Document;
-import com.szboanda.sentiment.beans.FeatureDocument;
-import com.szboanda.sentiment.feature_extraction.AbstractFeatureExtractionImpl;
-
+import com.ivan.sentiment.beans.Document;
+import com.ivan.sentiment.beans.FeatureDocument;
+import com.ivan.sentiment.feature_extraction.AbstractFeatureExtractionImpl;
+/**
+ *
+ * @ClassName: CHIFeatureExtractionImpl
+ * @Description: 使用卡方校验方法提取TopN特征词
+ * @author zhaoyifan
+ * @date 2017年3月3日 上午11:07:26
+ */
 public class CHIFeatureExtractionImpl extends AbstractFeatureExtractionImpl {
 	/**好汉每个词条的文档的个数*/
 	Map<String, Double> countOfDocsContainWord = new HashMap<String, Double>();
 	/**
 	 * 提取样本中的特征词
-	 * @author 赵一帆
+	 * @author zhaoyifan
 	 * @param samples 样本 
 	 * 		  map的key是样本的labels（即分类标签，例如：position和negation）
 	 * 		  value	是样本的集合以及各个样本分词后的集合
 	 * @param featureNum 特征词个数
-	 * @see 原理说明：
-	 * 		分别计算每个单词在每个label类别下的卡方值，最后取最大值作为该词条的卡方值
+	 * @see原理说明
+     *      分别计算每个单词在每个label类别下的卡方值，最后取最大值作为该词条的卡方值
 	 * @return List<String> 返回特征词集合
 	 */
 	@Override
 	public List<String> featureExtraction(Map<String, List<List<String>>> samples, int featureNum) {
 		// TODO Auto-generated method stub
+		this.featureNum = featureNum;
+		return featureExtraction(samples);
+	}
+
+	@Override
+	public List<String> featureExtraction(Map<String, List<List<String>>> samples) {
 		initVariable(samples);
 		//计算卡方值
 		calcValuesForWord();
 		//获取TopN特征词
-		getTopNFeatures(featureNum);
+		getTopNFeatures();
 		return features;
 	}
 
 	/**
 	 * 计算每一个单词在所有类别中的卡方值，取最大的值作为该词条最后的卡方值
-	 * @author 赵一帆
+	 * @author zhaoyifan
 	 * @see 
 	 * @return
 	 */

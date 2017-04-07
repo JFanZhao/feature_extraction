@@ -1,27 +1,22 @@
-package com.szboanda.sentiment.feature_extraction.impl;
+package com.ivan.sentiment.feature_extraction.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import com.szboanda.sentiment.beans.Document;
-import com.szboanda.sentiment.beans.FeatureDocument;
-import com.szboanda.sentiment.feature_extraction.AbstractFeatureExtractionImpl;
-import com.szboanda.sentiment.feature_extraction.IFeatureExtraction;
-import com.szboanda.sentiment.utils.CollectionUtils;
+import com.ivan.sentiment.beans.Document;
+import com.ivan.sentiment.beans.FeatureDocument;
+import com.ivan.sentiment.feature_extraction.AbstractFeatureExtractionImpl;
+
 /**
  *  
  * @ClassName: IGFeatureExtractionImpl 
  * @Description: 使用信息增益方法提取TopN特征词
- * <p>Company: 深圳市博安达信息技术股份有限公司</p> 
  * @author zhaoyifan
  * @date 2017年3月3日 上午11:07:26
  */
-public class IGFeatureExtractionImpl extends AbstractFeatureExtractionImpl{
+public class IGFeatureExtractionImpl extends AbstractFeatureExtractionImpl {
 	/**记录每个类别下的文档数量*/
 	private Map<String, Integer> countOfClassifyDocument = new HashMap<String, Integer>();  
 	/**
@@ -31,13 +26,19 @@ public class IGFeatureExtractionImpl extends AbstractFeatureExtractionImpl{
 	 * 		  map的key是样本的labels（即分类标签，例如：position和negation）
 	 * 		  value	是样本的集合以及各个样本分词后的集合
 	 * @param featureNum 特征词个数
-	 * @see 原理说明：
+	 * @see原理说明：
 	 * 		分别计算每个单词在每个label类别下的信息增益值
 	 * @return List<String> 返回特征词集合
 	 */
 	@Override
 	public List<String> featureExtraction(Map<String, List<List<String>>> samples, int featureNum) {
 		// TODO Auto-generated method stub
+		this.featureNum = featureNum;
+		return featureExtraction(samples);
+	}
+
+	@Override
+	public List<String> featureExtraction(Map<String, List<List<String>>> samples) {
 		//初始化变量
 		initVariable(samples);
 		//计算每个类别的文档数量
@@ -47,12 +48,13 @@ public class IGFeatureExtractionImpl extends AbstractFeatureExtractionImpl{
 		//计算每一个单词的信息增益
 		calcValuesForWord();
 		//获取TopN特征
-		getTopNFeatures(featureNum);
+		getTopNFeatures();
 		return features;
 	}
+
 	/**
 	 * 计算每个单词的信息增益，得到所有单词信息增益集合
-	 * @author 赵一帆
+	 * @author zhaoyifan
 	 * @see 
 	 * @return
 	 */

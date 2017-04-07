@@ -1,4 +1,4 @@
-package com.szboanda.sentiment.feature_extraction;
+package com.ivan.sentiment.feature_extraction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,14 +8,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import com.szboanda.sentiment.beans.Document;
-import com.szboanda.sentiment.beans.FeatureDocument;
-import com.szboanda.sentiment.utils.CollectionUtils;
+import com.ivan.sentiment.beans.Document;
+import com.ivan.sentiment.beans.FeatureDocument;
+import com.ivan.sentiment.utils.CollectionUtils;
 
+/**
+ * *
+ * @ClassName: AbstractFeatureExtractionImpl
+ * @Description: 提取特征词抽象类，包含公用的属性值
+ * @author zhaoyifan
+ * @date 2017年3月2日 上午10:19:18
+ */
 public abstract class AbstractFeatureExtractionImpl implements IFeatureExtraction {
 
 	/**存储文档*/
-	protected List<Document> documents = new ArrayList<Document>();        
+	protected List<Document> documents = new ArrayList<Document>();
 	/**记录所有词的信息增益值，按信息增益值排序后提取TopN作为特征词*/
 	protected Map<String, Double> featureValueMap = new HashMap<String, Double>();    
 	/**存储样本中所有不重复的单词*/
@@ -23,7 +30,7 @@ public abstract class AbstractFeatureExtractionImpl implements IFeatureExtractio
 	/**提取TopN后的特征词*/
 	protected List<String> features = new ArrayList<String>();
 	/**提取的特征词数量*/
-	protected final int numOfFeature = 300;
+	protected  int featureNum = 300;
 	/**样本（文档）总数*/
 	protected int totalDocumentCount = 0;
 	/**样本标签*/
@@ -78,7 +85,7 @@ public abstract class AbstractFeatureExtractionImpl implements IFeatureExtractio
 	 * @see 
 	 * @return
 	 */
-	protected void getTopNFeatures(int featureNum){
+	protected void getTopNFeatures(){
 		//排序，得到TopN的特征词
 		List<Entry<String, Number>> sortedFeatures = CollectionUtils.sortMapByValue(featureValueMap, false);
 		//获取TopN特征词
